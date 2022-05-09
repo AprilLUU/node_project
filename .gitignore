@@ -4,3 +4,5 @@ node_modules
 .env
 # 编辑器文件
 .vscode
+# jwt密钥
+src/app/keys
