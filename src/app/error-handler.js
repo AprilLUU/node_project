@@ -24,6 +24,18 @@ const errorHandler = (err, ctx) => {
       status = 401
       message = "无效的token,授权失败~"
       break
+    case errorType.UNPERMISSION:
+      status = 401
+      message = "没有操作权限~"
+      break
+    case errorType.QUERY_ERROR:
+      status = 500
+      message = "查询出错~"
+      break
+    case errorType.RESPONSE_ERROR:
+      status = 500
+      message = ctx.errorMsg
+      break
     default:
       status = 404
       message = "NOT FOUND"

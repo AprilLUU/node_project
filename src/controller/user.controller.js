@@ -1,10 +1,15 @@
-const service = require("../service/user.service")
+const responseWithErrHandle = require("../utils/respone-with-err-handle")
+const serviceMap = require("./service.map")
 
 class UserController {
   async create(ctx, next) {
     const user = ctx.request.body
-    await service.create(user)
-    ctx.body = "create user success"
+    await responseWithErrHandle({
+      ctx,
+      serviceName: serviceMap.user.serviceName,
+      ...serviceMap.user.create,
+      args: [user]
+    })
   }
 }
 
