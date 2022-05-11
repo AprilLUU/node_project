@@ -1,5 +1,8 @@
 const responseWithErrHandle = require("../utils/respone-with-err-handle")
 const serviceMap = require("./service.map")
+const momentService = require("../service/moment.service")
+const emitErr = require("../utils/emit-err")
+const errorType = require("../constants/error-type")
 
 class MomentController {
   async create(ctx, next) {
@@ -55,6 +58,28 @@ class MomentController {
       ...serviceMap.moment.remove,
       args: [momentId]
     })
+  }
+
+  async addLabels(ctx, next) {
+    const { labels } = ctx.request.body
+    const { momentId } = ctx.request.params
+    for (let label of labels) {
+      try {
+        const isExists = await momentService.hasLabel(momentId, label.id)
+        if (!isExists) {
+          try {
+            await momentService.addLabel(momentId, label.id)
+          } catch(error) {
+            ctx.errorMsg = "添加标签失败~"
+            emitErr(ctx, errorType.RESPONSE_ERROR)
+          }
+        }
+      } catch(error) {
+        emitErr(ctx, errorType.QUERY_ERROR)
+      }
+    }
+
+    ctx.body = "添加标签成功~"
   }
 }
 

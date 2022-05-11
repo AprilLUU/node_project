@@ -58,6 +58,19 @@ const serviceMap = {
     list: {
       method: "getCommentsByMomentId",
       errorMsg: "查询出错,请检查momentId是否传递~"
+    },
+    addLabels: {
+      method: "",
+      successMsg: "创建标签成功~",
+      errorMsg: "创建标签失败~"
+    }
+  },
+  label: {
+    serviceName: "label.service",
+    create: {
+      method: "create",
+      successMsg: "创建标签成功~",
+      errorMsg: "创建标签失败~"
     }
   }
 }

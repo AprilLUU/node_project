@@ -67,6 +67,18 @@ class MomentService {
     const [res] = await execSQLWithErrHandle(statement, momentId)
     return res
   }
+
+  async hasLabel(momentId, labelId) {
+    const statement = `SELECT * FROM moment_label WHERE moment_id = ? AND label_id = ?;`
+    const [res] = await execSQLWithErrHandle(statement, momentId, labelId)
+    return res.length !== 0
+  }
+
+  async addLabel(momentId, labelId) {
+    const statement = `INSERT INTO moment_label (moment_id, label_id) VALUES (?, ?);`
+    const [res] = await execSQLWithErrHandle(statement, momentId, labelId)
+    return res
+  }
 }
 
 module.exports = new MomentService()
