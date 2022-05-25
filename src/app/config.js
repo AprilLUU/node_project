@@ -8,6 +8,7 @@ const PRIVATE_KEY = fs.readFileSync(path.resolve(__dirname, "./keys/private.key"
 const PUBLIC_KEY = fs.readFileSync(path.resolve(__dirname, "./keys/public.key"))
 
 const {
+  APP_HOST,
   APP_PORT,
   MYSQL_HOST,
   MYSQL_PROT,
@@ -17,6 +18,7 @@ const {
 } = process.env
 
 module.exports = {
+  APP_HOST,
   APP_PORT,
   MYSQL_HOST,
   MYSQL_PROT,

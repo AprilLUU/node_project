@@ -11,6 +11,16 @@ class LabelController {
       args: [name]
     })
   }
+
+  async list(ctx, next) {
+    const { limit, offset } = ctx.request.query
+    await responseWithErrHandle({
+      ctx,
+      serviceName: serviceMap.label.serviceName,
+      ...serviceMap.label.list,
+      args: [limit, offset]
+    })
+  }
 }
 
 module.exports = new LabelController()

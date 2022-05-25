@@ -15,6 +15,7 @@ const responseWithErrHandle = async (options) => {
       ctx.body = res
     }
   } catch(error) {
+    console.log(error)
     ctx.errorMsg = errorMsg
     emitErr(ctx, errorType.RESPONSE_ERROR)
   }

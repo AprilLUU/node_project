@@ -55,6 +55,7 @@ const verifyAuth = async (ctx, next) => {
   }
 }
 
+// 判断用户是否有修改和删除权限,即该条动态或评论是否属于该用户
 const verifyPermission = async (ctx, next) => {
   const [resourceKey] = Object.keys(ctx.params)
   const tableName = resourceKey.replace("Id", "")

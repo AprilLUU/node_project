@@ -8,8 +8,7 @@ const verifyUser = async (ctx, next) => {
   const { name, password } = ctx.request.body
   // 验证用户名或者密码是否为空
   if (!name || !password) {
-    const err = new Error(errorType.NAME_OR_PASSWORD_IS_REQUIRED)
-    ctx.app.emit("error", err, ctx)
+    emitErr(ctx, errorType.NAME_OR_PASSWORD_IS_REQUIRED)
     return
   }
   // 验证用户是否已注册

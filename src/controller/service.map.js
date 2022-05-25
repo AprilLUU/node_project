@@ -5,6 +5,10 @@ const serviceMap = {
       method: "create",
       successMsg: "创建用户成功~",
       errorMsg: "创建用户失败~"
+    },
+    detail: {
+      method: "getUserById",
+      errorMsg: "查询出错~"
     }
   },
   moment: {
@@ -71,6 +75,23 @@ const serviceMap = {
       method: "create",
       successMsg: "创建标签成功~",
       errorMsg: "创建标签失败~"
+    },
+    list: {
+      method: "getLabelList",
+      errorMsg: "查询失败~"
+    }
+  },
+  file: {
+    serviceName: "file.service",
+    saveAvatarInfo: {
+      method: "createAvatar",
+      successMsg: "保存头像信息成功~",
+      errorMsg: "保存头像信息失败~"
+    },
+    savePictureInfo: {
+      method: "createFile",
+      successMsg: "图片上传成功~",
+      errorMsg: "图片上传失败~"
     }
   }
 }

@@ -12,6 +12,12 @@ class LabelService {
     const [res] = await execSQLWitjErrHandle(statement, name)
     return res[0]
   }
+
+  async getLabelList(limit, offset) {
+    const statement = `SELECT id, name, createAt createTime FROM label LIMIT ? OFFSET ?;`
+    const [res] = await execSQLWitjErrHandle(statement, limit, offset)
+    return res
+  }
 }
 
 module.exports = new LabelService()

@@ -1,3 +1,4 @@
+const { APP_HOST, APP_PORT } = require("../app/config")
 const execSQLWithErrHandle = require("../utils/exec-sql-with-err-handle")
 
 // const sqlFarment = `
@@ -20,25 +21,26 @@ class MomentService {
     const statement = `
       SELECT
         m.id id, m.content content,
-        JSON_OBJECT('id', u.id, 'name', u.name) user,
+        JSON_OBJECT('id', u.id, 'name', u.name, 'avatarURL', u.avatar_url) user,
         m.createAt createTime, m.updateAt updateTime,
-        (SELECT COUNT(*) FROM comment c WHERE c.moment_id = m.id) commentCount,
-        JSON_ARRAYAGG(
+        IF(COUNT(l.id), JSON_ARRAYAGG(
+          JSON_OBJECT('id', l.id, 'name', l.name)
+        ), NULL) labels,
+        (SELECT IF(COUNT(c.id), JSON_ARRAYAGG(
           JSON_OBJECT('id', c.id, 'content', c.content, 'commentId', c.comment_id, 'createTime', c.createAt,
-                      'user', JSON_OBJECT('id', cu.id, 'name', cu.name))
-        ) comments
+                      'user', JSON_OBJECT('id', cu.id, 'name', cu.name, 'avatarURL', cu.avatar_url))
+        ), NULL) FROM comment c LEFT JOIN user cu ON c.user_id = cu.id WHERE c.moment_id = m.id) comments,
+        (SELECT JSON_ARRAYAGG(CONCAT('http://${APP_HOST}:${APP_PORT}/moment/images/', file.filename))
+          FROM file WHERE file.moment_id = m.id) images
       FROM moment m
-      LEFT JOIN user u ON m.user_id = u.id
-      LEFT JOIN comment c ON c.moment_id = m.id
-      LEFT JOIN user cu ON c.user_id = cu.id
-      WHERE m.id = ?;
+      LEFT JOIN user u ON u.id = m.user_id
+      LEFT JOIN moment_label ml ON ml.moment_id = m.id
+      LEFT JOIN label l ON l.id = ml.label_id
+      WHERE m.id = ?
+      GROUP BY m.id;
     `
     const [res] = await execSQLWithErrHandle(statement, momentId)
-    const item = res[0]
-    if (item.comments.length === 1 && item.comments[0].id === null) {
-      item.comments = []
-    }
-    return item
+    return res[0]
   }
 
   async getMomentList(limit, offset) {
@@ -47,7 +49,10 @@ class MomentService {
         m.id id, m.content content,
         JSON_OBJECT('id', u.id, 'name', u.name) user,
         m.createAt createTime, m.updateAt updateTime,
-        (SELECT COUNT(*) FROM comment c WHERE c.moment_id = m.id) commentCount
+        (SELECT COUNT(*) FROM comment c WHERE c.moment_id = m.id) commentCount,
+        (SELECT COUNT(*) FROM moment_label ml WHERE ml.moment_id = m.id) labelCount,
+        (SELECT JSON_ARRAYAGG(CONCAT('http://${APP_HOST}:${APP_PORT}/moment/images/', file.filename))
+          FROM file WHERE file.moment_id = m.id) images
       FROM moment m LEFT JOIN user u
       ON m.user_id = u.id
       LIMIT ? OFFSET ?;

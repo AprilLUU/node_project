@@ -1,8 +1,12 @@
+const fs = require("fs")
+
 const responseWithErrHandle = require("../utils/respone-with-err-handle")
 const serviceMap = require("./service.map")
 const momentService = require("../service/moment.service")
 const emitErr = require("../utils/emit-err")
 const errorType = require("../constants/error-type")
+const fileService = require("../service/file.service")
+const { PICTURE_PATH } = require("../constants/file-path")
 
 class MomentController {
   async create(ctx, next) {
@@ -72,14 +76,27 @@ class MomentController {
           } catch(error) {
             ctx.errorMsg = "添加标签失败~"
             emitErr(ctx, errorType.RESPONSE_ERROR)
+            return
           }
         }
       } catch(error) {
         emitErr(ctx, errorType.QUERY_ERROR)
+        return
       }
     }
 
     ctx.body = "添加标签成功~"
+  }
+
+  async fileInfo(ctx, next) {
+    // 获取文件名
+    let { filename } = ctx.params
+    // 查询文件
+    const file = await fileService.getFileByFilename(filename)
+    const type = ctx.query.type ?? ""
+    if (type) filename += `--${type}`
+    ctx.response.set("content-type", file.mimetype)
+    ctx.body = fs.createReadStream(`${PICTURE_PATH}/${filename}`)
   }
 }
 

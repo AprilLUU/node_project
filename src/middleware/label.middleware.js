@@ -23,7 +23,7 @@ const verifyLabelIsExists = async (ctx, next) => {
 
       newLabels.push(label)
 
-    } catch(errir) {
+    } catch(error) {
       emitErr(ctx, errorType.QUERY_ERROR)
     }
   }

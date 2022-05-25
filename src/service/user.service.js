@@ -13,6 +13,18 @@ class UserService {
     const [res] = await execSQLWithErrHandle(statament, name)
     return res[0]
   }
+
+  async getUserById(id) {
+    const statament = `SELECT id, name, createAt createTime, avatar_url avatarURL FROM user WHERE id = ?;`
+    const [res] = await execSQLWithErrHandle(statament, id)
+    return res[0]
+  }
+
+  async updateAvatarURLById(avatarURL, id) {
+    const statament = `UPDATE user SET avatar_url = ? WHERE id = ?;`
+    const [res] = await execSQLWithErrHandle(statament, avatarURL, id)
+    return res
+  }
 }
 
 module.exports = new UserService()
