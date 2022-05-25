@@ -1,6 +1,15 @@
 const Router = require("koa-router")
-const { verifyAuth, verifyPermission } = require("../middleware/auth.middleware")
-const { create, reply, update, remove, list } = require("../controller/comment.controller")
+const {
+  verifyAuth,
+  verifyPermission
+} = require("../middleware/auth.middleware")
+const {
+  create,
+  reply,
+  update,
+  remove,
+  list
+} = require("../controller/comment.controller")
 
 const router = new Router({ prefix: "/comment" })
 

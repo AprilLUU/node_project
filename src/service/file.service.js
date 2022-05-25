@@ -3,7 +3,13 @@ const execSQLWithErrHandle = require("../utils/exec-sql-with-err-handle")
 class FileService {
   async createAvatar(filename, mimetype, size, userId) {
     const statement = `INSERT INTO avatar (filename, mimetype, size, user_id) VALUES (?, ?, ?, ?);`
-    const [res] = await execSQLWithErrHandle(statement, filename, mimetype, size, userId)
+    const [res] = await execSQLWithErrHandle(
+      statement,
+      filename,
+      mimetype,
+      size,
+      userId
+    )
     return res
   }
 
@@ -15,7 +21,14 @@ class FileService {
 
   async createFile(filename, mimetype, size, userId, momentId) {
     const statement = `INSERT INTO file (filename, mimetype, size, user_id, moment_id) VALUES (?, ?, ?, ?, ?);`
-    const [res] = await execSQLWithErrHandle(statement, filename, mimetype, size, userId, momentId)
+    const [res] = await execSQLWithErrHandle(
+      statement,
+      filename,
+      mimetype,
+      size,
+      userId,
+      momentId
+    )
     return res
   }
 

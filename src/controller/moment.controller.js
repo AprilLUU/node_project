@@ -73,13 +73,13 @@ class MomentController {
         if (!isExists) {
           try {
             await momentService.addLabel(momentId, label.id)
-          } catch(error) {
+          } catch (error) {
             ctx.errorMsg = "添加标签失败~"
             emitErr(ctx, errorType.RESPONSE_ERROR)
             return
           }
         }
-      } catch(error) {
+      } catch (error) {
         emitErr(ctx, errorType.QUERY_ERROR)
         return
       }

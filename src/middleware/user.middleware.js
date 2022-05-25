@@ -3,7 +3,6 @@ const { getUserByName } = require("../service/user.service")
 const emitErr = require("../utils/emit-err")
 const md5password = require("../utils/password-handle")
 
-
 const verifyUser = async (ctx, next) => {
   const { name, password } = ctx.request.body
   // 验证用户名或者密码是否为空
@@ -20,10 +19,9 @@ const verifyUser = async (ctx, next) => {
     }
     // 调用下一个中间件 等待执行完毕
     await next()
-  } catch(error) {
+  } catch (error) {
     emitErr(ctx, errorType.QUERY_ERROR)
   }
-
 }
 
 const handlePassword = async (ctx, next) => {

@@ -3,13 +3,24 @@ const execSQLWithErrHandle = require("../utils/exec-sql-with-err-handle")
 class CommentService {
   async create(momentId, content, userId) {
     const statement = `INSERT INTO comment (content, moment_id, user_id) VALUES (?, ?, ?);`
-    const [res] = await execSQLWithErrHandle(statement, content, momentId, userId)
+    const [res] = await execSQLWithErrHandle(
+      statement,
+      content,
+      momentId,
+      userId
+    )
     return res
   }
 
   async reply(momentId, content, userId, commentId) {
     const statement = `INSERT INTO comment (content, moment_id, user_id, comment_id) VALUES (?, ?, ?, ?);`
-    const [res] = await execSQLWithErrHandle(statement, content, momentId, userId, commentId)
+    const [res] = await execSQLWithErrHandle(
+      statement,
+      content,
+      momentId,
+      userId,
+      commentId
+    )
     return res
   }
 

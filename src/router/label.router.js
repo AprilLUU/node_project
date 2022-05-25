@@ -8,5 +8,3 @@ router.post("/", verifyAuth, create)
 router.get("/", list)
 
 module.exports = router
-
-

@@ -2,7 +2,6 @@ const labelService = require("../service/label.service")
 const emitErr = require("../utils/emit-err")
 const errorType = require("../constants/error-type")
 
-
 const verifyLabelIsExists = async (ctx, next) => {
   const { labels } = ctx.request.body
   const newLabels = []
@@ -22,8 +21,7 @@ const verifyLabelIsExists = async (ctx, next) => {
       }
 
       newLabels.push(label)
-
-    } catch(error) {
+    } catch (error) {
       emitErr(ctx, errorType.QUERY_ERROR)
     }
   }

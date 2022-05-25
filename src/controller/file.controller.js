@@ -13,7 +13,7 @@ class FileController {
     try {
       const avatarURL = `http://${APP_HOST}/${APP_PORT}/user/${id}/avatar`
       await userService.updateAvatarURLById(avatarURL, id)
-    } catch(error) {
+    } catch (error) {
       ctx.errorMsg = "保存用户头像失败~"
       emitErr(ctx, errorType.RESPONSE_ERROR)
     }

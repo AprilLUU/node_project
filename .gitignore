@@ -6,3 +6,5 @@ node_modules
 .vscode
 # jwt密钥
 src/app/keys
+# 上传的文件
+uploads

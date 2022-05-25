@@ -2,9 +2,7 @@ const emitErr = require("./emit-err")
 const errorType = require("../constants/error-type")
 
 const responseWithErrHandle = async (options) => {
-  const {
-    ctx, serviceName, method, successMsg, errorMsg, args
-  } = options
+  const { ctx, serviceName, method, successMsg, errorMsg, args } = options
 
   try {
     const service = require(`../service/${serviceName}`)
@@ -14,7 +12,7 @@ const responseWithErrHandle = async (options) => {
     } else {
       ctx.body = res
     }
-  } catch(error) {
+  } catch (error) {
     console.log(error)
     ctx.errorMsg = errorMsg
     emitErr(ctx, errorType.RESPONSE_ERROR)

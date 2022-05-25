@@ -11,11 +11,11 @@ module.exports = {
   },
   rules: {
     // 缩进 2个空格
-    indent: ["error", 2, { "SwitchCase": 1 }],
+    indent: ["error", 2, { SwitchCase: 1 }],
     // 换行
     "linebreak-style": ["error", "unix"],
     // 单引号或者双引号
-    quotes: ["error", "double", { "allowTemplateLiterals": true }],
+    quotes: ["error", "double", { allowTemplateLiterals: true }],
     // 分号
     semi: ["error", "never"],
     "no-undef": "off",

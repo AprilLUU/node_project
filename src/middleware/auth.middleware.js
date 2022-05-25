@@ -31,7 +31,7 @@ const verifyLogin = async (ctx, next) => {
 
     ctx.user = user
     await next()
-  } catch(error) {
+  } catch (error) {
     emitErr(ctx, errorType.QUERY_ERROR)
   }
 }
@@ -50,7 +50,7 @@ const verifyAuth = async (ctx, next) => {
     })
     ctx.user = res
     await next()
-  } catch(error) {
+  } catch (error) {
     emitErr(ctx, errorType.UNAUTHORIZATION)
   }
 }
@@ -63,16 +63,19 @@ const verifyPermission = async (ctx, next) => {
   const { id } = ctx.user
   // 查询是否有修改和删除权限
   try {
-    const isPermission = await authService.checkResource(tableName, resourceId, id)
+    const isPermission = await authService.checkResource(
+      tableName,
+      resourceId,
+      id
+    )
     if (!isPermission) {
       emitErr(ctx, errorType.UNPERMISSION)
       return
     }
     await next()
-  } catch(error) {
+  } catch (error) {
     emitErr(ctx, errorType.QUERY_ERROR)
   }
-
 }
 
 module.exports = {

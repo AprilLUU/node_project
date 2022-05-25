@@ -4,7 +4,7 @@ async function execSQLWithErrHandle(statement, ...args) {
   try {
     const res = await connection.execute(statement, args)
     return res
-  } catch(err) {
+  } catch (err) {
     console.log("SQL execute error")
     console.log(err)
     throw new Error("SQL execute error")
