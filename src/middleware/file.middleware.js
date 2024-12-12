@@ -26,6 +26,7 @@ const pictureHandler = pictureUpload.array("picture", 9)
 
 const pictureResize = async (ctx, next) => {
   const files = ctx.req.files
+  console.log(files)
 
   for (const file of files) {
     const destPath = path.join(file.destination, file.filename)

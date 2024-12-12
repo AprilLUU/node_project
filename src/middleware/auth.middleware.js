@@ -48,9 +48,11 @@ const verifyAuth = async (ctx, next) => {
     const res = jwt.verify(token, config.PUBLIC_KEY, {
       algorithms: ["RS256"]
     })
+    console.log(res)
     ctx.user = res
     await next()
   } catch (error) {
+    console.log(error)
     emitErr(ctx, errorType.UNAUTHORIZATION)
   }
 }

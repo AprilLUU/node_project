@@ -7,11 +7,14 @@ const emitErr = require("../utils/emit-err")
 
 class FileController {
   async saveAvatarInfo(ctx, next) {
+    console.log(ctx.req.file)
     const { mimetype, filename, size } = ctx.req.file
+    console.log(ctx.req.file)
     const { id } = ctx.user
     // 保存用户头像地址
     try {
       const avatarURL = `http://${APP_HOST}/${APP_PORT}/user/${id}/avatar`
+      console.log(avatarURL)
       await userService.updateAvatarURLById(avatarURL, id)
     } catch (error) {
       ctx.errorMsg = "保存用户头像失败~"
