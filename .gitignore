@@ -8,3 +8,5 @@ node_modules
 src/app/keys
 # 上传的文件
 uploads
+
+nodepro.sql
